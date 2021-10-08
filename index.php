@@ -1,1 +1,1 @@
-ADN
+ADN.localhost
