@@ -11,7 +11,7 @@
     <body> 
         <?php require_once("navBar.php");
         require_once("cards.php");
-        
+        require_once("loginModal.php");
         ?>   
         <script src="/js/bootstrap.bundle.min.js"></script>
     </body>
