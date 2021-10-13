@@ -19,7 +19,7 @@ if($_COOKIE["login"] || $_SESSION["login"]){
     </head>
     <body> 
         <?php require_once("navBar.php");
-        require_once("cards.php");
+        require_once("controle.php");        
         if(!$login){
             require_once("loginModal.php");
         }

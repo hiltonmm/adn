@@ -5,8 +5,9 @@
             <div class="card text-dark bg-light mb-3" style="max-width: 25rem;">
                 <div class="card-header">Aviso nº 123/2021</div>
                 <div class="card-body">
-                    <h5 class="card-title">Registro</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <h5 class="card-title">Onde posso conseguí-lo um bolsa?</h5>
+                    <p class="card-text">É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação sua di ...</p>
+                    <button class="btn-primary">Ler aviso completo</button>
                 </div>
             </div>
 
@@ -17,8 +18,9 @@
             <div class="card text-dark bg-light mb-3" style="max-width: 25rem;">
                 <div class="card-header">Header</div>
                 <div class="card-body">
-                    <h5 class="card-title">Todos</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title">Onde posso conseguí-lo um bolsa?</h5>
+                    <p class="card-text">É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação sua di ...</p>
+                    <button class="btn-primary">Ler aviso completo</button>
                 </div>
             </div>
 
@@ -29,8 +31,9 @@
             <div class="card text-dark bg-light mb-3" style="max-width: 25rem;">
                 <div class="card-header">Header</div>
                 <div class="card-body">
-                    <h5 class="card-title">Light card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title">Onde posso conseguí-lo um bolsa?</h5>
+                    <p class="card-text">É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação sua di ...</p>
+                    <button class="btn-primary">Ler aviso completo</button>
                 </div>
             </div>
 
@@ -46,8 +49,9 @@
             <div class="card text-dark bg-light mb-3" style="max-width: 25rem;">
                 <div class="card-header">Header</div>
                 <div class="card-body">
-                    <h5 class="card-title">Light card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title">Onde posso conseguí-lo um bolsa?</h5>
+                    <p class="card-text">É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação sua di ...</p>
+                    <button class="btn-primary">Ler aviso completo</button>
                 </div>
             </div>
 
@@ -58,8 +62,9 @@
             <div class="card text-dark bg-light mb-3" style="max-width: 25rem;">
                 <div class="card-header">Header</div>
                 <div class="card-body">
-                    <h5 class="card-title">Light card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title">Onde posso conseguí-lo um bolsa?</h5>
+                    <p class="card-text">É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação sua di ...</p>
+                    <button class="btn-primary">Ler aviso completo</button>
                 </div>
             </div>
 
@@ -70,8 +75,9 @@
             <div class="card text-dark bg-light mb-3" style="max-width: 25rem;">
                 <div class="card-header">Header</div>
                 <div class="card-body">
-                    <h5 class="card-title">Light card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <h5 class="card-title">Onde posso conseguí-lo um bolsa?</h5>
+                    <p class="card-text">É um fato conhecido de todos que um leitor se distrairá com o conteúdo de texto legível de uma página quando estiver examinando sua diagramação sua di ...</p>
+                    <button class="btn-primary">Ler aviso completo</button>
                 </div>
             </div>
 
