@@ -1,3 +1,12 @@
+<?php 
+session_start(); 
+
+if($_COOKIE["login"] || $_SESSION["login"]){
+    $login = true;
+} else {
+    $login = false;
+}
+?>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -11,7 +20,9 @@
     <body> 
         <?php require_once("navBar.php");
         require_once("cards.php");
-        require_once("loginModal.php");
+        if(!$login){
+            require_once("loginModal.php");
+        }
         ?>   
         <script src="/js/bootstrap.bundle.min.js"></script>
     </body>

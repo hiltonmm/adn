@@ -1,6 +1,7 @@
 <?php
-$user = 'hilton';
-$password = '#Hmm010903';
+session_start();
+$user = $_POST["userName"];
+$password = $_POST["password"];
 $domain = 'cartorio.int';
 $basedn = 'dc=cartorio,dc=int';
 $group = 'adnAdmin';
@@ -10,20 +11,34 @@ $ad = ldap_connect("ldap://{$domain}") or die('{"cod" : "1", "msg" : "Não foi p
 ldap_set_option($ad, LDAP_OPT_PROTOCOL_VERSION, 3);
 ldap_set_option($ad, LDAP_OPT_REFERRALS, 0);
  
-$bind = @ldap_bind($ad, "{$user}@{$domain}", $password) or die('{"cod" : "2", "msg" : "Erro ao logar, usuário ou senha inválidos"}');
+$bind = ldap_bind($ad, "{$user}@{$domain}", $password);
 
 
 if($bind){
+    setcookie("login", true, time()+31536000, '/'); 
+    $_SESSION['login'] = true;
     $userdn = getDN($ad, $user, $basedn);
-    //echo getCN($userdn);
+    setcookie("userName", getCN($userdn), time()+31536000, '/'); 
+    $_SESSION["userName"] = getCN($userdn);
     if (checkGroupEx($ad, $userdn, getDN($ad, $group, $basedn))){
+        setcookie("privilegio", true, time()+31536000, '/'); 
+        $_SESSION["privilegio"] = true;
         echo '{"cod" : "3", "msg" : "Usuário conectado, com privilégio"}';
+        
     } else {
-        echo '{"cod" : "4", "msg" : "Usuário conectado, sem privilégio"}';
+        setcookie("privilegio", false, time()+31536000, '/'); 
+        $_SESSION["privilegio"] = false;
+        echo '{"cod" : "3", "msg" : "Usuário conectado, sem privilégio"}';
     }
-//ldap_unbind($ad);
+} else {
+  setcookie("login", '', time()-1); 
+  setcookie("userName", '', time()-1); 
+  setcookie("privilegio", '', time()-1); 
+  session_unset();
+  session_destroy();
+  echo '{"cod" : "2", "msg" : "Erro ao logar, usuário ou senha inválidos. <br> Você deve informar o mesmo usuário e senha utilizado para entrar no windows."}';
 }
- 
+ldap_unbind($ad); 
 /**
  * This function searchs in LDAP tree entry specified by samaccountname and
  * returns its DN or epmty string on failure.

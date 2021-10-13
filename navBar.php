@@ -16,6 +16,7 @@
                      <a class="nav-link dropdown-toggle" href="#" id="dropdownFuncoes" data-bs-toggle="dropdown" aria-expanded="false">Funções</a>
                      <ul class="dropdown-menu" aria-labelledby="dropdownFuncoes">
                          <li><a class="dropdown-item" href="#">Novo Aviso</a></li>
+                         <li><a class="dropdown-item" href="sair.php">Sair</a></li>
                      </ul>
                  </li>
              </ul>
