@@ -16,6 +16,7 @@ if($_COOKIE["login"] || $_SESSION["login"]){
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="/css/bootstrap.min.css">
         <script src="/js/jquery-3.6.0.min.js"></script>
+        <script src="/js/alertModal.js"></script>
     </head>
     <body> 
         <?php require_once("navBar.php");

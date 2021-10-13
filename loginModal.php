@@ -65,11 +65,11 @@
                 <div class="alert alert-danger d-none" role="alert" id="erroMsg">      
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="username" placeholder="Nome">
+                    <input type="text" class="form-control" id="username" placeholder="">
                     <label for="username">Nome do Usuário</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="password" placeholder="Senha">
+                    <input type="password" class="form-control" id="password" placeholder="">
                     <label for="password">Senha</label>
                 </div>
             </div>

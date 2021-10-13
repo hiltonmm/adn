@@ -10,7 +10,7 @@
          <div class="navbar-collapse collapse" id="nav01">
              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                  <li class="nav-item">
-                     <a class="nav-link" href="#">Avisos</a>
+                     <a class="nav-link" href="/">Avisos</a>
                  </li>
                  <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#" id="dropdownFuncoes" data-bs-toggle="dropdown" aria-expanded="false">Funções</a>
