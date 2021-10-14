@@ -1,4 +1,11 @@
- <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Navegação">
+<?php 
+    if($_COOKIE["privilegio"]){
+        $permiteNovoAviso = '';
+    } else {
+        $permiteNovoAviso = 'disabled';
+    }
+?>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Navegação">
      <div class="container-fluid">
          <a class="navbar-brand" href="#">
              <img src="/img/logo.png" width="100" height="50">
@@ -15,7 +22,7 @@
                  <li class="nav-item dropdown">
                      <a class="nav-link dropdown-toggle" href="#" id="dropdownFuncoes" data-bs-toggle="dropdown" aria-expanded="false">Funções</a>
                      <ul class="dropdown-menu" aria-labelledby="dropdownFuncoes">
-                         <li><a class="dropdown-item" href="/?m=1">Novo Aviso</a></li>
+                         <li><a class="dropdown-item <?= $permiteNovoAviso ?>" href="/?m=1" >Novo Aviso</a></li>
                          <li><a class="dropdown-item" href="sair.php">Sair</a></li>
                      </ul>
                  </li>

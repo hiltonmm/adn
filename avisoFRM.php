@@ -1,4 +1,8 @@
 <?php
+if(!$_COOKIE["privilegio"]){
+    echo "<h1> ACESSO NEGADO </h1>";
+    exit;
+}
 require_once("api/aviso.php");
 $action = '1'; //$_REQUEST['a'];
 $avisoNum;
