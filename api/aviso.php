@@ -104,6 +104,13 @@ function listarAvisos($array=["p" => '0']){
         $ref = $array["ref"];
         $param = "titulo LIKE '%$ref%' OR breveResumo LIKE '%$ref%' OR texto LIKE '%$ref%'";
         $refPagina = '&ref='.$array["ref"];
+        if($array["ref"] == ''){
+            $titulo = "Exibindo Todos os Avisos";
+        } else {
+            $titulo = "Exibindo Avisos por pequisados por referência (% ". $array["ref"]." %)";
+        }
+    } else {
+        $titulo = "Exibindo Avisos não lidos ou fixados";
     }
 
 
@@ -128,15 +135,21 @@ function listarAvisos($array=["p" => '0']){
         $paginacao = NULL;
     }
 
-    $sql = "SELECT * FROM aviso WHERE $param ORDER BY id DESC LIMIT $posicao,$rpp";
+    $sql = "SELECT * FROM aviso WHERE $param ORDER BY fixar DESC, id DESC LIMIT $posicao,$rpp";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
-        $html = '';
+        $html = '<div class="col-12"><h4>'.$titulo.'</h4></div>';
+        
         while ($row = $result->fetch_assoc()) {
+            if($row["fixar"]){
+                $fixo = 'Fixo';
+            } else {
+                $fixo = '';
+            }
             $html .= <<<EOF
                 <div class="col-4">
                     <div class="card text-dark bg-light mb-3" style="max-width: 25rem; min-height: 16rem">
-                        <div class="card-header">Aviso nº  {$row['num']}/{$row['ano']}</div>
+                        <div class="card-header">Aviso nº  {$row['num']}/{$row['ano']} - {$fixo}</div>
                         <div class="card-body">
                             <h5 class="card-title">{$row['titulo']}</h5>
                             <p class="card-text">{$row['breveResumo']}</p>

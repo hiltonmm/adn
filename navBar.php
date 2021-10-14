@@ -23,6 +23,8 @@
                      <a class="nav-link dropdown-toggle" href="#" id="dropdownFuncoes" data-bs-toggle="dropdown" aria-expanded="false">Funções</a>
                      <ul class="dropdown-menu" aria-labelledby="dropdownFuncoes">
                          <li><a class="dropdown-item <?= $permiteNovoAviso ?>" href="/?m=1" >Novo Aviso</a></li>
+                         <li><a class="dropdown-item" href="/?ref=">Listar Todos os Avisos</a></li> 
+                         <li><a class="dropdown-item" href="/">Listar Avisos não lidos ou fixados</a></li>
                          <li><a class="dropdown-item" href="sair.php">Sair</a></li>
                      </ul>
                  </li>
