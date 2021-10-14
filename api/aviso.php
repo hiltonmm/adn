@@ -33,16 +33,38 @@ function verificarProximoAviso(){
 }
 function salvarAviso(){
     $dados = $_POST;
+    global $conn;
     
-    if($dados["aviso"] === $dados["controle_aviso"]){
-        $aviso = atualizarNumeroAviso($dados["aviso"]);
+    
+    $aviso = explode("/", atualizarNumeroAviso($dados["aviso"]));
+    $avisoNum = $aviso['0'];
+    $avisoAno = $aviso['1'];
+    
+
+    $now = new DateTime();
+    $agora = $now->format('Y-m-d H:i:s');
+
+    $sql = "INSERT INTO aviso (id, num, ano, dataAviso, titulo, breveResumo, texto, fixar) VALUES (NULL, '$avisoNum', '$avisoAno', '$agora', '".$dados["titulo"]."', '".$dados["descricao"]."', '".$dados["fullText"]."', ".$dados["fix"].")";
+    $result = $conn->query($sql);
+
+    if($result) {
+        echo '{"retorno" : true}';
     } else {
-        $aviso = explode("/", $dados["aviso"])
-        $aviso["num"] = $aviso['0'];
-        $aviso["ano"] = $aviso['1'];
-
+        echo '{"retorno" : false, "msg" : "'.$sql.'"}';
     }
+}
 
-    echo '{"retorno" : true}';
+function atualizarNumeroAviso($aviso){
+    global $conn;
+
+    $aviso1 = explode("/", $aviso);
+    $avisoNum = $aviso1['0'];
+    $avisoAno = $aviso1['1'];
+
+    $sql = "UPDATE avisosNum SET num = '$avisoNum', ano = '$avisoAno' WHERE id = 1";
+    $result = $conn->query($sql);
+
+    return $aviso;
+
 }
 ?>

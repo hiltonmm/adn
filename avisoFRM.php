@@ -1,24 +1,26 @@
-<?php 
+<?php
 require_once("api/aviso.php");
-$action = '1';//$_REQUEST['a'];
+$action = '1'; //$_REQUEST['a'];
 $avisoNum;
 $avisoAno;
 
-switch($action){
-    case '1' : numeraAviso();
-    break;
-    default : numeraAviso();
-    break;
+switch ($action) {
+    case '1':
+        numeraAviso();
+        break;
+    default:
+        numeraAviso();
+        break;
 }
 
-function numeraAviso(){
+function numeraAviso()
+{
     global $avisoNum, $avisoAno;
     $aviso = verificarProximoAviso();
-    if(is_array($aviso)){
+    if (is_array($aviso)) {
         $avisoNum = $aviso["num"];
         $avisoAno = $aviso['ano'];
     }
-    
 }
 
 ?>
@@ -48,22 +50,21 @@ function numeraAviso(){
             ]
         });
 
-        $("#titulo").keyup(function(){
+        $("#titulo").keyup(function() {
             let max = $(this).attr('maxlength')
             let cont = $(this).val().length;
             let rest = max - cont;
             $(".tituloCount").html(rest);
         })
-        $("#descricao").keyup(function(){
+        $("#descricao").keyup(function() {
             let max = $(this).attr('maxlength')
             let cont = $(this).val().length;
             let rest = max - cont;
             $(".descCount").html(rest);
         })
-        $(".btn-salvar").click(function(){
+        $(".btn-salvar").click(function() {
             let btn = $(this);
             let aviso = $("#aviso");
-            let controle_aviso = $("#controle_aviso");
             let action = $("#action");
             let titulo = $("#titulo");
             let descricao = $("#descricao");
@@ -71,26 +72,29 @@ function numeraAviso(){
             let erro = false;
             let erroMsg = $("#erroMsg");
             let msg = '';
+            let fixar = $("#fixar");
 
-            if(titulo.val() === ''){
+            alert()
+
+            if (titulo.val() === '') {
                 erro = true;
                 titulo.addClass('is-invalid');
                 msg += "<p>Você precisa prencher o campo titulo.<p>";
             }
 
-            if(descricao.val() === ''){
+            if (descricao.val() === '') {
                 erro = true;
                 descricao.addClass('is-invalid');
                 msg += "<p>Você precisa prencher o campo Breve Descrição.</p>";
             }
 
-            if(fullText.val() === ''){
+            if (fullText.val() === '') {
                 erro = true;
                 fullText.addClass('is-invalid');
                 msg += "<p>Você precisa redigir o aviso no campo abaixo.</p>";
             }
 
-            if(erro){
+            if (erro) {
                 erroMsg.removeClass("d-none");
                 erroMsg.html(msg);
             } else {
@@ -105,8 +109,8 @@ function numeraAviso(){
                 dados.set('descricao', descricao.val());
                 dados.set('fullText', fullText.val());
                 dados.set('aviso', aviso.val());
-                dados.set('controle_aviso', controle_aviso.val());
                 dados.set('action', action.val());
+                dados.set('fix', fixar.is(':checked'));
 
                 $.ajax({
                     type: 'POST',
@@ -141,8 +145,7 @@ function numeraAviso(){
     <div class="row">
         <div class="col-2">
             <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="aviso" placeholder="" value="<?= $avisoNum.'/'.$avisoAno ?>">
-                <input type="hidden" id="controle_aviso" value="<?= $avisoNum.'/'.$avisoAno ?>">
+                <input type="text" class="form-control" id="aviso" placeholder="" value="<?= $avisoNum . '/' . $avisoAno ?>" readonly>
                 <input type="hidden" id="action" value="1">
                 <label for="aviso">Aviso nº</label>
             </div>
@@ -153,26 +156,34 @@ function numeraAviso(){
                 <label for="titulo">Titulo do Aviso - Maximo de 30 Caracteres. Restam <span class="tituloCount">30</span> caracteres</label>
             </div>
         </div>
-    <div>
-    <div class="row">    
-        <div class="col-12">    
-        <div class="form-floating mb-3">
-                <textarea class="form-control" maxlength="150" id="descricao" rows="3" style="height: 90px;"  placeholder=""></textarea>
-                <label for="descricao">Breve Descrição - Maximo de 150 Caracteres. Restam <span class="descCount">150</span> caracteres</label>
+        <div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" maxlength="150" id="descricao" rows="3" style="height: 90px;" placeholder=""></textarea>
+                        <label for="descricao">Breve Descrição - Maximo de 150 Caracteres. Restam <span class="descCount">150</span> caracteres</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-1 mb-3 d-flex justify-content-center align-items-center">
+
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" role="switch" id="fixar">
+                        <label class="form-check-label" for="fixar">FIXAR</label>
+                    </div>
+                </div>
+
+                <div class="col-2 mb-3 d-flex justify-content-center align-items-center">
+                    <button class="btn btn-primary btn-salvar">Salvar</button>
+                </div>
+                <div class="col-9">
+                    <div class="alert alert-danger d-none" id="erroMsg"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <textarea placeholder="DIGITE O AVISO COMPLETO AQUI" id="fullText"></textarea>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row">    
-        <div class="col-2 mb-3 d-flex justify-content-center align-items-center">    
-            <button class="btn btn-primary btn-salvar">Salvar</button>
-        </div>
-        <div class="col-10">    
-            <div class="alert alert-danger d-none"  id="erroMsg"></div> 
-        </div>
-    </div>
-    <div class="row">    
-        <div class="col-12">    
-            <textarea  placeholder="DIGITE O AVISO COMPLETO AQUI" id="fullText"></textarea>
-        </div>
-    </div>
-</div>
