@@ -72,7 +72,13 @@ function atualizarNumeroAviso($aviso){
 function verificarLidos(){
     global $conn;
 
-    $sql = "SELECT * FROM leitura WHERE user = '".$_COOKIE['user']."'";
+    if(isset($_COOKIE['user'])){
+        $user = $_COOKIE['user'];
+    } else {
+        $user = '';
+    }
+
+    $sql = "SELECT * FROM leitura WHERE user = '$user'";
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0){
@@ -95,14 +101,14 @@ function listarAvisos($array=["p" => '0']){
 
     $lidos = json_decode(verificarLidos());
     if($lidos->retorno){
-        $param = "id NOT IN ($lidos->ids) OR fixar = '1'";
+        $param = "WHERE id NOT IN ($lidos->ids) OR fixar = '1'";
     } else {
         $param = "";
     }
     
     if(isset($array["ref"])){
         $ref = $array["ref"];
-        $param = "titulo LIKE '%$ref%' OR breveResumo LIKE '%$ref%' OR texto LIKE '%$ref%'";
+        $param = "WHERE titulo LIKE '%$ref%' OR breveResumo LIKE '%$ref%' OR texto LIKE '%$ref%'";
         $refPagina = '&ref='.$array["ref"];
         if($array["ref"] == ''){
             $titulo = "Exibindo Todos os Avisos";
@@ -114,7 +120,7 @@ function listarAvisos($array=["p" => '0']){
     }
 
 
-    $sql = "SELECT count(*) FROM aviso WHERE $param";
+    $sql = "SELECT count(*) FROM aviso $param";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
 
@@ -135,14 +141,14 @@ function listarAvisos($array=["p" => '0']){
         $paginacao = NULL;
     }
 
-    $sql = "SELECT * FROM aviso WHERE $param ORDER BY fixar DESC, id DESC LIMIT $posicao,$rpp";
+    $sql = "SELECT * FROM aviso $param ORDER BY fixar DESC, id DESC LIMIT $posicao,$rpp";
     $result = $conn->query($sql);
     if ($result->num_rows > 0) {
         $html = '<div class="col-12"><h4>'.$titulo.'</h4></div>';
         
         while ($row = $result->fetch_assoc()) {
             if($row["fixar"]){
-                $fixo = 'Fixo';
+                $fixo = 'Fixado';
             } else {
                 $fixo = '';
             }
@@ -155,7 +161,7 @@ function listarAvisos($array=["p" => '0']){
                             <p class="card-text">{$row['breveResumo']}</p>
                         </div>
                         <div class="card-footer text-end">
-                        <button class="btn-primary">Ler aviso completo</button>
+                        <a class="btn btn-primary" href="?m=2&id={$row['id']}">Ler aviso completo</a>
                       </div>
                     </div>
                 </div>
@@ -195,5 +201,41 @@ function listarAvisos($array=["p" => '0']){
     } else {
         return '<h2> Aviso não localizado </h2>';
     }
+}
+
+function exibirAviso($id){
+    global $conn;
+
+    $sql = "SELECT * FROM aviso WHERE id = $id";
+    $result = $conn->query($sql);
+
+    if($result->num_rows > 0){
+        $row = $result->fetch_assoc();
+        $data = date("d/m/Y H:i", strtotime($row["dataAviso"]));
+        $html = '<div class="container p-3">';
+        $html .= '<div class="row">';
+        $html .= '<div class="col-12 text-center"><h1>Aviso nº'.$row["num"].'/'.$row["ano"].'</h1><h5>'.$data.'</h5></div><hr />';
+        $html .= '</div>';
+        $html .= '<div class="row">';
+        $html .= '<div class="col-12 text-center"><h3>'.$row["titulo"].'</h3></div>';
+        $html .= '</div>';
+        $html .= '<div class="row">';
+        $html .= '<div class="col-12">'.$row["texto"].'</div>';
+        $html .= '</div>';
+        $html .= '<div class="row">';
+        $html .= '<div class="col-12 text-center">
+                    <button class="btn btn-primary me-3">Dar Ciência e marcar como lido</button>
+                    <button class="btn btn-primary me-3">Exibir Histórico de leitura</button>
+                    <button class="btn btn-primary">Editar</button></div>';
+        $html .= '</div>';
+        
+        $html .= '</div>';
+
+        
+        return $html;
+    } else {
+        return '<h2> Aviso não localizado </h2>';
+    }
+
 }
 ?>

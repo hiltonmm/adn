@@ -6,6 +6,8 @@ $m = $_REQUEST['m'];
         break;
         case '1' : require_once("avisoFRM.php");
         break;
+        case '2' : require_once("lerAviso.php");
+        break;
         default : require_once("cards.php");
         break;
     }

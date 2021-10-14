@@ -1,6 +1,6 @@
 <?php
 session_start();
-$user = $_POST["userName"];
+$user =  $_POST["userName"];
 $password = $_POST["password"];
 $domain = 'cartorio.int';
 $basedn = 'dc=cartorio,dc=int';
@@ -37,6 +37,7 @@ if($bind){
   setcookie("login", '', time()-1); 
   setcookie("userName", '', time()-1); 
   setcookie("privilegio", '', time()-1); 
+  setcookie("user", '', time()-1); 
   session_unset();
   session_destroy();
   echo '{"cod" : "2", "msg" : "Erro ao logar, usuário ou senha inválidos. <br> Você deve informar o mesmo usuário e senha utilizado para entrar no windows."}';
