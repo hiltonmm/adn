@@ -74,8 +74,6 @@ function numeraAviso()
             let msg = '';
             let fixar = $("#fixar");
 
-            alert()
-
             if (titulo.val() === '') {
                 erro = true;
                 titulo.addClass('is-invalid');
