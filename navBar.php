@@ -28,7 +28,7 @@
                  </li>
              </ul>
              <form>
-                 <input class="form-control" type="text" placeholder="Pesquisar" aria-label="Search">
+                 <input class="form-control" type="text" placeholder="Pesquisar" aria-label="Search" name="ref">
              </form>
          </div>
      </div>

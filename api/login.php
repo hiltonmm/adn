@@ -20,6 +20,9 @@ if($bind){
     $userdn = getDN($ad, $user, $basedn);
     setcookie("userName", getCN($userdn), time()+31536000, '/'); 
     $_SESSION["userName"] = getCN($userdn);
+    setcookie("user", $user, time()+31536000, '/'); 
+    $_SESSION["user"] = $user;
+
     if (checkGroupEx($ad, $userdn, getDN($ad, $group, $basedn))){
         setcookie("privilegio", true, time()+31536000, '/'); 
         $_SESSION["privilegio"] = true;
@@ -38,6 +41,7 @@ if($bind){
   session_destroy();
   echo '{"cod" : "2", "msg" : "Erro ao logar, usuário ou senha inválidos. <br> Você deve informar o mesmo usuário e senha utilizado para entrar no windows."}';
 }
+
 ldap_unbind($ad); 
 /**
  * This function searchs in LDAP tree entry specified by samaccountname and
@@ -64,7 +68,9 @@ function getDN($ad, $samaccountname, $basedn)
   $entries = ldap_get_entries($ad, $result);
   if ($entries['count'] > 0)
   {
+    
     return $entries[0]['dn'];
+
   }
  
   return '';
