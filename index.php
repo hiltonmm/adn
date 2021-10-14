@@ -6,6 +6,11 @@ if($_COOKIE["login"] || $_SESSION["login"]){
 } else {
     $login = false;
 }
+if($_COOKIE["privilegio"]){
+    $privlegio = '';
+} else {
+    $privlegio = 'disabled';
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

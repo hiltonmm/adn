@@ -204,7 +204,7 @@ function listarAvisos($array=["p" => '0']){
 }
 
 function exibirAviso($id){
-    global $conn;
+    global $conn, $privlegio;
 
     $sql = "SELECT * FROM aviso WHERE id = $id";
     $result = $conn->query($sql);
@@ -225,8 +225,8 @@ function exibirAviso($id){
         $html .= '<div class="row">';
         $html .= '<div class="col-12 text-center">
                     <button class="btn btn-primary me-3">Dar Ciência e marcar como lido</button>
-                    <button class="btn btn-primary me-3">Exibir Histórico de leitura</button>
-                    <button class="btn btn-primary">Editar</button></div>';
+                    <button class="btn btn-primary '.$privlegio.' me-3">Exibir Histórico de leitura</button>
+                    <button class="btn btn-primary '.$privlegio.'">Editar</button></div>';
         $html .= '</div>';
         
         $html .= '</div>';
