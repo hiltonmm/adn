@@ -7,6 +7,8 @@ if(isset($_POST['action'])){
     switch($action){
         case '1' : salvarAviso();
         break;
+        case '2' : editaAviso();
+        break;
         default : return false;
         break;
     }
@@ -55,6 +57,29 @@ function salvarAviso(){
         echo '{"retorno" : false, "msg" : "'.$sql.'"}';
     }
 }
+
+function editaAviso(){
+    $dados = $_POST;
+    global $conn; 
+
+    $sql = "UPDATE aviso SET titulo = '".$dados["titulo"]."', breveResumo = '".$dados["descricao"]."', texto = '".$dados["fullText"]."', fixar = ".$dados["fix"].", edit = true WHERE id = '".$dados["idAviso"]."';";
+    $result = $conn->query($sql);
+
+    if($result) {
+        echo '{"retorno" : true}';
+    } else {
+       echo '{"retorno" : false, "msg" : "'.$sql.'"}';
+    }
+
+}
+
+
+
+
+
+
+
+
 
 function atualizarNumeroAviso($aviso){
     global $conn;
@@ -152,10 +177,15 @@ function listarAvisos($array=["p" => '0']){
             } else {
                 $fixo = '';
             }
+            if($row["edit"]){
+                $editado = '- EDITADO';
+            } else {
+                $editado = '';
+            }
             $html .= <<<EOF
                 <div class="col-4">
                     <div class="card text-dark bg-light mb-3" style="max-width: 25rem; min-height: 16rem">
-                        <div class="card-header">Aviso nº  {$row['num']}/{$row['ano']} - {$fixo}</div>
+                        <div class="card-header">Aviso nº  {$row['num']}/{$row['ano']} - {$fixo} {$editado}</div>
                         <div class="card-body">
                             <h5 class="card-title">{$row['titulo']}</h5>
                             <p class="card-text">{$row['breveResumo']}</p>
@@ -226,7 +256,7 @@ function exibirAviso($id){
         $html .= '<div class="col-12 text-center">
                     <button class="btn btn-primary me-3">Dar Ciência e marcar como lido</button>
                     <button class="btn btn-primary '.$privlegio.' me-3">Exibir Histórico de leitura</button>
-                    <button class="btn btn-primary '.$privlegio.'">Editar</button></div>';
+                    <a href="/?m=1&a=2&aviso='.$row["id"].'" class="btn btn-primary '.$privlegio.'">Editar</a></div>';
         $html .= '</div>';
         
         $html .= '</div>';
@@ -237,5 +267,18 @@ function exibirAviso($id){
         return '<h2> Aviso não localizado </h2>';
     }
 
+}
+function carregarAviso($id){
+    global $conn;
+
+    $sql = "SELECT * FROM aviso WHERE id = $id";
+    $result = $conn->query($sql);
+
+    if($result->num_rows > 0){
+        $row = $result->fetch_assoc();
+        return $row;
+    } else {
+        return false;
+    }
 }
 ?>

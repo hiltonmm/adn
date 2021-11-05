@@ -1,21 +1,15 @@
 <?php
-if(!$_COOKIE["privilegio"]){
+if (!$_COOKIE["privilegio"]) {
     echo "<h1> ACESSO NEGADO </h1>";
     exit;
 }
 require_once("api/aviso.php");
-$action = '1'; //$_REQUEST['a'];
+$action = $_REQUEST['a'];
+$idAviso = $_REQUEST['aviso'];
 $avisoNum;
 $avisoAno;
 
-switch ($action) {
-    case '1':
-        numeraAviso();
-        break;
-    default:
-        numeraAviso();
-        break;
-}
+
 
 function numeraAviso()
 {
@@ -25,6 +19,133 @@ function numeraAviso()
         $avisoNum = $aviso["num"];
         $avisoAno = $aviso['ano'];
     }
+}
+
+function editar($id){
+    $aviso = carregarAviso($id);
+    if(!$aviso){
+        $html = "Erro ao carregar o aviso";
+    } else {
+        if($aviso["fixar"]){
+            $fixo = 'checked';
+        } else {
+            $fixo = '';
+        }
+        $html = <<<EOF
+        <div class="container">
+                        <div class="row">
+                            <div class="col-12">
+                                <h4> Editar Aviso </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-2">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="aviso" placeholder="" value="{$aviso["num"]} / {$aviso["ano"]}" readonly>
+                                    <input type="hidden" id="action" value="2">
+                                    <input type="hidden" id="idAviso" value="{$aviso["id"]}">
+                                    <label for="aviso">Aviso nº</label>
+                                </div>
+                            </div>
+                            <div class="col-10">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" maxlength="30" id="titulo" placeholder="" value="{$aviso["titulo"]}">
+                                    <label for="titulo">Titulo do Aviso - Maximo de 30 Caracteres. Restam <span class="tituloCount">30</span> caracteres</label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-floating mb-3">
+                                            <textarea class="form-control" maxlength="150" id="descricao" rows="3" style="height: 90px;" placeholder="">{$aviso["breveResumo"]}</textarea>
+                                            <label for="descricao">Breve Descrição - Maximo de 150 Caracteres. Restam <span class="descCount">150</span> caracteres</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1 mb-3 d-flex justify-content-center align-items-center">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" role="switch" id="fixar" {$fixo}>
+                                            <label class="form-check-label" for="fixar">FIXAR</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-2 mb-3 d-flex justify-content-center align-items-center">
+                                        <button class="btn btn-primary btn-salvar">Salvar</button>
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="alert alert-danger d-none" id="erroMsg"></div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-12">
+                                        <textarea placeholder="DIGITE O AVISO COMPLETO AQUI" id="fullText">{$aviso["texto"]}</textarea>
+                                    </div>
+                                    <p></p>
+                                </div>
+                            </div>
+
+        EOF;
+        echo $html;
+    }
+}
+function novo(){
+    global $avisoNum, $avisoAno;
+    numeraAviso();
+
+    $html = <<<EOF
+    <div class="container">
+                    <div class="row">
+                        <div class="col-12">
+                            <h4> Novo Aviso </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" id="aviso" placeholder="" value="{$avisoNum} / {$avisoAno}" readonly>
+                                <input type="hidden" id="action" value="1">
+                                <label for="aviso">Aviso nº</label>
+                            </div>
+                        </div>
+                        <div class="col-10">
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" maxlength="30" id="titulo" placeholder="">
+                                <label for="titulo">Titulo do Aviso - Maximo de 30 Caracteres. Restam <span class="tituloCount">30</span> caracteres</label>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="form-floating mb-3">
+                                        <textarea class="form-control" maxlength="150" id="descricao" rows="3" style="height: 90px;" placeholder=""></textarea>
+                                        <label for="descricao">Breve Descrição - Maximo de 150 Caracteres. Restam <span class="descCount">150</span> caracteres</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 mb-3 d-flex justify-content-center align-items-center">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="fixar">
+                                        <label class="form-check-label" for="fixar">FIXAR</label>
+                                    </div>
+                                </div>
+                                <div class="col-2 mb-3 d-flex justify-content-center align-items-center">
+                                    <button class="btn btn-primary btn-salvar">Salvar</button>
+                                </div>
+                                <div class="col-9">
+                                    <div class="alert alert-danger d-none" id="erroMsg"></div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-12">
+                                    <textarea placeholder="DIGITE O AVISO COMPLETO AQUI" id="fullText"></textarea>
+                                </div>
+                                <p></p>
+                            </div>
+                        </div>
+
+    EOF;
+    echo $html;
 }
 
 ?>
@@ -73,11 +194,13 @@ function numeraAviso()
             let titulo = $("#titulo");
             let descricao = $("#descricao");
             let fullText = $("#fullText");
+            let idAviso = $("#idAviso");
             let erro = false;
             let erroMsg = $("#erroMsg");
             let msg = '';
             let fixar = $("#fixar");
 
+            
             if (titulo.val() === '') {
                 erro = true;
                 titulo.addClass('is-invalid');
@@ -112,6 +235,7 @@ function numeraAviso()
                 dados.set('fullText', fullText.val());
                 dados.set('aviso', aviso.val());
                 dados.set('action', action.val());
+                dados.set('idAviso', idAviso.val());
                 dados.set('fix', fixar.is(':checked'));
 
                 $.ajax({
@@ -123,13 +247,14 @@ function numeraAviso()
                     success: function(returnval) {
                         r = JSON.parse(returnval);
                         if (!r.retorno) {
+                            alert()
                             btn.removeAttr('disabled');
                             erroMsg.removeClass('d-none');
                             erroMsg.html(r.msg)
                         } else {
-                            alertModal("Novo Aviso salvo com sucesso.", "Aviso", '/');
+                            alertModal("Aviso salvo com sucesso.", "Aviso", '/');
                         }
-                    }
+                    } 
                 })
             }
 
@@ -137,55 +262,16 @@ function numeraAviso()
         })
     });
 </script>
-
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h4> Novo Aviso </h4>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-2">
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="aviso" placeholder="" value="<?= $avisoNum . '/' . $avisoAno ?>" readonly>
-                <input type="hidden" id="action" value="1">
-                <label for="aviso">Aviso nº</label>
-            </div>
-        </div>
-        <div class="col-10">
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" maxlength="30" id="titulo" placeholder="">
-                <label for="titulo">Titulo do Aviso - Maximo de 30 Caracteres. Restam <span class="tituloCount">30</span> caracteres</label>
-            </div>
-        </div>
-        <div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="form-floating mb-3">
-                        <textarea class="form-control" maxlength="150" id="descricao" rows="3" style="height: 90px;" placeholder=""></textarea>
-                        <label for="descricao">Breve Descrição - Maximo de 150 Caracteres. Restam <span class="descCount">150</span> caracteres</label>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-1 mb-3 d-flex justify-content-center align-items-center">
-
-                    <div class="form-check form-switch">
-                        <input class="form-check-input" type="checkbox" role="switch" id="fixar">
-                        <label class="form-check-label" for="fixar">FIXAR</label>
-                    </div>
-                </div>
-
-                <div class="col-2 mb-3 d-flex justify-content-center align-items-center">
-                    <button class="btn btn-primary btn-salvar">Salvar</button>
-                </div>
-                <div class="col-9">
-                    <div class="alert alert-danger d-none" id="erroMsg"></div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <textarea placeholder="DIGITE O AVISO COMPLETO AQUI" id="fullText"></textarea>
-                </div>
-            </div>
-        </div>
+<?php
+switch ($action) {
+    case '1':
+        novo();
+        break;
+    case '2':
+        editar($idAviso);
+        break;
+    default:
+        novo();
+        break;
+}
+?>
