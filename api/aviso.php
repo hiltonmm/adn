@@ -173,7 +173,7 @@ function listarAvisos($array=["p" => '0']){
         
         while ($row = $result->fetch_assoc()) {
             if($row["fixar"]){
-                $fixo = 'Fixado';
+                $fixo = '- Fixado';
             } else {
                 $fixo = '';
             }
@@ -185,7 +185,7 @@ function listarAvisos($array=["p" => '0']){
             $html .= <<<EOF
                 <div class="col-4">
                     <div class="card text-dark bg-light mb-3" style="max-width: 25rem; min-height: 16rem">
-                        <div class="card-header">Aviso nº  {$row['num']}/{$row['ano']} - {$fixo} {$editado}</div>
+                        <div class="card-header">Aviso nº  {$row['num']}/{$row['ano']} {$fixo} {$editado}</div>
                         <div class="card-body">
                             <h5 class="card-title">{$row['titulo']}</h5>
                             <p class="card-text">{$row['breveResumo']}</p>
