@@ -1,0 +1,30 @@
+version: '3.3'
+volumes:
+  data: 
+services:
+  db:
+    image: mysql
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123123
+      - MYSQL_DATABASE=pedidos
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    links:
+      - db
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_ARBITRARY=1
+  www:
+    build: .
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./www:/var/www/html
+    links:
+     - db
